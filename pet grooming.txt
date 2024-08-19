@@ -1,0 +1,240 @@
+package PET_ADOPTION;
+
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.awt.Font;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JTextArea;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import javax.swing.ImageIcon;
+
+public class groom extends JFrame {
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField textField;
+    private JDateChooser dateChooser;
+    private JTextArea textArea;
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    groom frame = new groom();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Create the frame.
+     */
+    public groom() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 1750, 870);
+        contentPane = new JPanel();
+        contentPane.setBackground(Color.PINK);
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JLabel lblNewLabel = new JLabel("Select your services");
+        lblNewLabel.setBounds(339, 28, 346, 35);
+        lblNewLabel.setFont(new Font("Palatino Linotype", Font.BOLD, 25));
+        contentPane.add(lblNewLabel);
+
+        JLabel lblNewLabel_1 = new JLabel("PET TYPE");
+        lblNewLabel_1.setBounds(71, 110, 147, 32);
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        contentPane.add(lblNewLabel_1);
+
+        JLabel lblNewLabel_2 = new JLabel("PET BREED");
+        lblNewLabel_2.setBounds(71, 153, 147, 35);
+        lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        contentPane.add(lblNewLabel_2);
+
+        JLabel lblNewLabel_3 = new JLabel("GENDER");
+        lblNewLabel_3.setBounds(71, 203, 125, 22);
+        lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        contentPane.add(lblNewLabel_3);
+
+        JLabel lblNewLabel_4 = new JLabel("SIZE");
+        lblNewLabel_4.setBounds(71, 249, 113, 22);
+        lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        contentPane.add(lblNewLabel_4);
+
+        JLabel lblNewLabel_5 = new JLabel("AGE");
+        lblNewLabel_5.setBounds(71, 282, 95, 35);
+        lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        contentPane.add(lblNewLabel_5);
+
+        JLabel lblNewLabel_6 = new JLabel("SERVICES");
+        lblNewLabel_6.setBounds(71, 328, 113, 32);
+        lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        contentPane.add(lblNewLabel_6);
+
+        JComboBox<String> comboBox = new JComboBox<>();
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"DOGS", "CATS"}));
+        comboBox.setBounds(241, 110, 159, 22);
+        contentPane.add(comboBox);
+
+        JComboBox<String> comboBox_1 = new JComboBox<>();
+        comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"American bulldog", "American foxhound", "Golden retriever", "Labrador retriever", "German shepherd", "Poodle", "Beagle", "Rottweiler", "Dachshund", "Dobermann", "Shih tzu", "Great dane", "Pug", "Pomeranian", "Chihuahua", "Siberian husky", "Ragdoll", "Persian cat", "Maine coon", "Scottish fold", "Himalayan cat", "American curl", "Somali cat", "Bombay cat", "Burmese cat", "American short hair"}));
+        comboBox_1.setBounds(241, 162, 159, 22);
+        contentPane.add(comboBox_1);
+
+        JComboBox<String> comboBox_2 = new JComboBox<>();
+        comboBox_2.setModel(new DefaultComboBoxModel<>(new String[]{"MALE", "FEMALE"}));
+        comboBox_2.setBounds(241, 206, 159, 22);
+        contentPane.add(comboBox_2);
+
+        JComboBox<String> comboBox_3 = new JComboBox<>();
+        comboBox_3.setModel(new DefaultComboBoxModel<>(new String[]{"SMALL", "MEDIUM", "LARGE"}));
+        comboBox_3.setBounds(241, 252, 159, 22);
+        contentPane.add(comboBox_3);
+
+        JComboBox<String> comboBox_4 = new JComboBox<>();
+        comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Puppyhood (up to 6 months)", "Adolescence (6 to 18 months)", "Adulthood (1.5 years to 3 years)", "Senior (more than 3 years)"}));
+        comboBox_4.setBounds(241, 291, 293, 22);
+        contentPane.add(comboBox_4);
+
+        JComboBox<String> comboBox_5 = new JComboBox<>();
+        comboBox_5.setModel(new DefaultComboBoxModel<>(new String[]{
+            "Bath With Shampoo & Conditioner", "Blow Dry", "Full body Trimming", "Zero Haircut", 
+            "Eye Cleaning", "Ear Cleaning", "Body Massage", "Sanitary Trim", "Nail Clipping", 
+            "Teeth Cleaning/Mouth Spray", "Paw Massage", "Combing/Brushing"}));
+        comboBox_5.setBounds(241, 336, 293, 22);
+        contentPane.add(comboBox_5);
+
+        JLabel lblNewLabel_7 = new JLabel("NAME");
+        lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblNewLabel_7.setBounds(71, 392, 147, 14);
+        contentPane.add(lblNewLabel_7);
+
+        textField = new JTextField();
+        textField.setBounds(241, 392, 159, 20);
+        contentPane.add(textField);
+        textField.setColumns(10);
+
+        JLabel lblNewLabel_7_1 = new JLabel("DATE");
+        lblNewLabel_7_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblNewLabel_7_1.setBounds(71, 440, 147, 14);
+        contentPane.add(lblNewLabel_7_1);
+
+        dateChooser = new JDateChooser();
+        dateChooser.setBounds(241, 440, 100, 20);
+        contentPane.add(dateChooser);
+
+        JLabel lblNewLabel_7_1_1 = new JLabel("TIME");
+        lblNewLabel_7_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblNewLabel_7_1_1.setBounds(71, 493, 147, 14);
+        contentPane.add(lblNewLabel_7_1_1);
+
+        JComboBox<String> comboBox_6 = new JComboBox<>();
+        comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"9am - 10 am", "10am - 11am", "11am - 12pm", "4pm - 5pm", "5pm - 6pm", "6pm - 7pm", "7pm - 8pm"}));
+        comboBox_6.setBounds(241, 492, 100, 22);
+        contentPane.add(comboBox_6);
+
+        textArea = new JTextArea();
+        textArea.setBounds(561, 110, 600, 550);
+        contentPane.add(textArea);
+
+        JButton btnNewButton = new JButton("BOOK YOUR APPOINTMENT");
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = dateChooser.getDate();
+                String dateString = sdf.format(date);
+
+                textArea.append("\n\n\n"+
+                        "Phone NO:7806854324\t\t\twww.happypaws.com\n"+
+                        "Fax:0427-23567\t\t\temail:happypaws23@gmail.com\n\n\n"+
+                        "\t\t                 HAPPY PAWS\n\n"+
+                        "\t\t\t\t     APPOINTMENT SLIP\n\n"+
+                        
+                        "\t\t=======================================================\n\n"+
+                        "\t\tType:|\t\t"+(String)comboBox.getSelectedItem()+"\n"+
+                        "-------------------------------------------------------\n"+
+                        "\t\tBreed:|\t\t"+(String)comboBox_1.getSelectedItem()+"\n"+
+                        "-------------------------------------------------------\n"+
+                        "\t\tGender:|\t\t"+(String)comboBox_2.getSelectedItem()+"\n"+
+                        "-------------------------------------------------------\n"+
+                        "\t\tSize:|\t\t"+(String)comboBox_3.getSelectedItem()+"\n"+
+                        "-------------------------------------------------------\n"+
+                        "\t\tAge:|\t\t"+(String)comboBox_4.getSelectedItem()+"\n"+
+                        "-------------------------------------------------------\n"+
+                        
+                        "\t\tService:|\t\t"+(String)comboBox_5.getSelectedItem()+"\n"+
+                        "-------------------------------------------------------\n"+
+                        "\t\tUsername:|\t\t"+textField.getText()+"\n"+
+                        
+                        "-------------------------------------------------------\n"+
+                        "\t\tDate:|\t\t"+dateString+"\n"+
+                        
+                        "-------------------------------------------------------\n"+
+                        "\t\tTime:|\t\t"+(String)comboBox_6.getSelectedItem()+"\n"+
+                        
+                        "=========================================================\n"+
+                        "\t\tCONGRATULATIONS YOUR APPOINTMENT HAS BEEN PLACED SUCCESSFULLY!!\n");
+            }
+        });
+        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnNewButton.setBounds(241, 599, 293, 45);
+        contentPane.add(btnNewButton);
+
+        JButton btnNewButton_2 = new JButton("PRINT");
+        btnNewButton_2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    textArea.print();
+                } catch (PrinterException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        btnNewButton_2.setBounds(795, 671, 150, 40);
+        contentPane.add(btnNewButton_2);
+        
+        JButton btnNewButton_1 = new JButton("BACK");
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		try {
+					new secondPage().setVisible(true);
+					SwingUtilities.windowForComponent(btnNewButton_2).dispose();
+				}
+				catch(Exception o) {
+					JOptionPane.showMessageDialog(btnNewButton_1,this,"Error while establishing connection failed",0);
+				}
+        	}
+        });
+        btnNewButton_1.setBounds(1137, 32, 89, 23);
+        contentPane.add(btnNewButton_1);
+        
+        JLabel lblNewLabel_8 = new JLabel("");
+        lblNewLabel_8.setIcon(new ImageIcon("C:\\Users\\Owner\\Downloads\\annie-spratt-zA7I5BtFbvw-unsplash.jpg"));
+        lblNewLabel_8.setBounds(0, 0, 1750, 870);
+        contentPane.add(lblNewLabel_8);
+    }
+}
+
