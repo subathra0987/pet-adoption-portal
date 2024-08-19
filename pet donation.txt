@@ -1,0 +1,267 @@
+package PET_ADOPTION;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
+
+public class adopt_pet extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField textField_3;
+    private JTextField textField_1;
+    private JTextField textField_4;
+    private JTextField textField;
+    private JTextField textField_2;
+    private JTextArea textArea;
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    adopt_pet frame = new adopt_pet();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Create the frame.
+     */
+    public adopt_pet() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(0, 0, 1750, 870);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        textField_4 = new JTextField();
+        textField_4.setColumns(10);
+        textField_4.setBounds(484, 575, 116, 31);
+        contentPane.add(textField_4);
+
+        JLabel lblNewLabel = new JLabel("DONOR DETAILS");
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblNewLabel.setBounds(74, 37, 276, 31);
+        contentPane.add(lblNewLabel);
+
+        JLabel lblNewLabel_1_1_1 = new JLabel("PHONE NUMBER");
+        lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1_1_1.setBounds(55, 147, 160, 31);
+        contentPane.add(lblNewLabel_1_1_1);
+
+        JLabel lblPetDetails = new JLabel("PET DETAILS");
+        lblPetDetails.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblPetDetails.setBounds(378, 216, 276, 31);
+        contentPane.add(lblPetDetails);
+
+        JComboBox<String> comboBox = new JComboBox<>();
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[]{"DOG", "CAT", "BIRD"}));
+        comboBox.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        comboBox.setBounds(482, 279, 160, 25);
+        contentPane.add(comboBox);
+
+        JComboBox<String> comboBox_1 = new JComboBox<>();
+        comboBox_1.setModel(new DefaultComboBoxModel<>(new String[]{
+                "American bulldog", "American foxhound", "Golden retriever", "Labrador retriever",
+                "German shepherd", "Poodle", "Beagle", "Rottweiler", "Dachshund", "Dobermann",
+                "Shih tzu", "Great dane", "Pug", "Pomeranian", "Chihuahua", "Siberian husky",
+                "Ragdoll", "Persian cat", "Maine coon", "Scottish fold", "Himalayan cat",
+                "American curl", "Somali cat", "Bombay cat", "Burmese cat", "American short hair",
+                "Red factory canary", "Araucana", "Racing homer", "Fantail pigeon", "American penkin",
+                "Love birds", "Cockatiels", "Parrots", "Hyacinth macaws"
+        }));
+        comboBox_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        comboBox_1.setBounds(482, 322, 160, 25);
+        contentPane.add(comboBox_1);
+
+        JComboBox<String> comboBox_2 = new JComboBox<>();
+        comboBox_2.setModel(new DefaultComboBoxModel<>(new String[]{
+                "Puppyhood (upto 6 months)", "Adolescence(6 to 18 months)", "Adulthood(1.5 years to 3 years)",
+                "Senior(more than 3 years)"
+        }));
+        comboBox_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        comboBox_2.setBounds(482, 372, 160, 25);
+        contentPane.add(comboBox_2);
+
+        JComboBox<String> comboBox_3 = new JComboBox<>();
+        comboBox_3.setModel(new DefaultComboBoxModel<>(new String[]{"MALE", "FEMALE"}));
+        comboBox_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        comboBox_3.setBounds(484, 424, 160, 25);
+        contentPane.add(comboBox_3);
+
+        JComboBox<String> comboBox_1_3 = new JComboBox<>();
+        comboBox_1_3.setModel(new DefaultComboBoxModel<>(new String[]{"YES", "NO"}));
+        comboBox_1_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        comboBox_1_3.setBounds(482, 468, 160, 25);
+        contentPane.add(comboBox_1_3);
+
+        JComboBox<String> comboBox_1_4 = new JComboBox<>();
+        comboBox_1_4.setModel(new DefaultComboBoxModel<>(new String[]{"YES", "NO"}));
+        comboBox_1_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        comboBox_1_4.setBounds(484, 521, 160, 25);
+        contentPane.add(comboBox_1_4);
+
+        JLabel lblPetType = new JLabel("PET TYPE");
+        lblPetType.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblPetType.setBounds(248, 287, 160, 25);
+        contentPane.add(lblPetType);
+
+        JLabel lblPetBreed = new JLabel("PET BREED");
+        lblPetBreed.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblPetBreed.setBounds(248, 322, 160, 25);
+        contentPane.add(lblPetBreed);
+
+        JLabel lblPetAge = new JLabel("PET AGE");
+        lblPetAge.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblPetAge.setBounds(248, 372, 160, 25);
+        contentPane.add(lblPetAge);
+
+        JLabel lblPetGender = new JLabel("PET GENDER");
+        lblPetGender.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblPetGender.setBounds(248, 424, 160, 25);
+        contentPane.add(lblPetGender);
+
+        JLabel lblVaccinated = new JLabel("VACCINATED");
+        lblVaccinated.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblVaccinated.setBounds(248, 468, 160, 25);
+        contentPane.add(lblVaccinated);
+
+        JLabel lblMedicalIllness = new JLabel("MEDICAL ILLNESS");
+        lblMedicalIllness.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblMedicalIllness.setBounds(248, 521, 200, 25);
+        contentPane.add(lblMedicalIllness);
+
+        textField_3 = new JTextField();
+        textField_3.setColumns(10);
+        textField_3.setBounds(214, 94, 116, 31);
+        contentPane.add(textField_3);
+
+        JButton btnNewButton = new JButton("BACK");
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new secondPage().setVisible(true);
+                    SwingUtilities.windowForComponent(btnNewButton).dispose();
+                } catch (Exception o) {
+                    JOptionPane.showMessageDialog(btnNewButton, "Error while establishing connection failed", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        btnNewButton.setBounds(1131, 26, 100, 30);
+        contentPane.add(btnNewButton);
+
+        JLabel lblPetCode = new JLabel("PET CODE");
+        lblPetCode.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblPetCode.setBounds(248, 569, 160, 25);
+        contentPane.add(lblPetCode);
+
+        textField_1 = new JTextField();
+        textField_1.setColumns(10);
+        textField_1.setBounds(484, 575, 116, 31);
+        contentPane.add(textField_1);
+
+        textField = new JTextField();
+        textField.setColumns(10);
+        textField.setBounds(214, 147, 116, 31);
+        contentPane.add(textField);
+
+        JLabel lblUsername = new JLabel("NAME");
+        lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblUsername.setBounds(67, 94, 106, 31);
+        contentPane.add(lblUsername);
+
+        JLabel lblUsername_1 = new JLabel("USERNAME");
+        lblUsername_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblUsername_1.setBounds(248, 612, 106, 31);
+        contentPane.add(lblUsername_1);
+
+        JButton btnSave = new JButton("SAVE");
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (textField.getText().length() != 10) {
+                    JOptionPane.showMessageDialog(btnSave, "Phone number must be 10 digits", "Invalid Phone Number", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                textArea.append("\n\n\n" +
+                        "Phone NO: 7806854324\t\t\twww.happypaws.com\n" +
+                        "Fax: 0427-23567\t\t\temail: happypaws23@gmail.com\n\n\n" +
+                        "\t\t                 HAPPY PAWS\n\n" +
+                        "\t\t\t\t     DONOR DETAILS\n\n" +
+                        "\t\t=======================================================\n\n" +
+
+                        "\t\ttype:|\t\t" + comboBox.getSelectedItem() + "\n" +
+                        "-------------------------------------------------------\n" +
+                        "\t\tbreed:|\t\t" + comboBox_1.getSelectedItem() + "\n" +
+                        "-------------------------------------------------------\n" +
+                        "\t\tage:|\t\t" + comboBox_2.getSelectedItem() + "\n" +
+                        "-------------------------------------------------------\n" +
+                        "\t\tgender:|\t\t" + comboBox_3.getSelectedItem() + "\n" +
+                        "-------------------------------------------------------\n" +
+                        "\t\tvaccination:|\t\t" + comboBox_1_3.getSelectedItem() + "\n" +
+                        "-------------------------------------------------------\n" +
+                        "\t\tmedical:|\t\t" + comboBox_1_4.getSelectedItem() + "\n" +
+                        "-------------------------------------------------------\n" +
+                        "\t\tpetcode:|\t\t" + textField_4.getText() + "\n" +
+                        "-------------------------------------------------------\n" +
+                        "\t\tusername:|\t\t" + textField_2.getText() + "\n" +
+                        "=========================================================\n" +
+                        "\t\tYOUR PETS WILL REACH SAFE HANDS!!\n");
+            }
+        });
+        btnSave.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnSave.setBounds(434, 699, 130, 30);
+        contentPane.add(btnSave);
+
+        textField_2 = new JTextField();
+        textField_2.setColumns(10);
+        textField_2.setBounds(484, 621, 116, 31);
+        contentPane.add(textField_2);
+
+        textArea = new JTextArea();
+        textArea.setBounds(751, 81, 500, 500);
+        contentPane.add(textArea);
+
+        JButton btnPrint = new JButton("PRINT");
+        btnPrint.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    textArea.print();
+                } catch (PrinterException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        btnPrint.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnPrint.setBounds(943, 640, 130, 30);
+        contentPane.add(btnPrint);
+
+        JLabel lblNewLabel_1 = new JLabel("");
+        lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Owner\\Downloads\\annie-spratt-zA7I5BtFbvw-unsplash.jpg"));
+        lblNewLabel_1.setBounds(10, 0, 1750, 870);
+        contentPane.add(lblNewLabel_1);
+    }
+}
