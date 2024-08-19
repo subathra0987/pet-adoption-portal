@@ -1,0 +1,251 @@
+package PET_ADOPTION;
+
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.JTextComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JTextArea;
+import javax.swing.ImageIcon;
+
+public class vet extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField textField_2;
+    private JTextField textField;
+    private JDateChooser dateChooser;
+    private JComboBox<String> comboBox_3;
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    vet frame = new vet();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Create the frame.
+     */
+    public vet() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(0, 0, 1750, 870);
+        contentPane = new JPanel();
+        contentPane.setBackground(Color.PINK);
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+        
+        JButton btnNewButton_2 = new JButton("PRINT");
+        btnNewButton_2.addActionListener(new ActionListener() {
+        	private JTextComponent textArea;
+
+			public void actionPerformed(ActionEvent e) {
+        		try {
+					textArea.print();
+				}
+				catch(PrinterException e1) {
+					e1.printStackTrace();
+				}
+        	}
+        });
+        btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+        btnNewButton_2.setBounds(958, 103, 172, 41);
+        contentPane.add(btnNewButton_2);
+        
+        JTextArea textArea = new JTextArea();
+        textArea.setFont(new Font("Monospaced", Font.BOLD | Font.ITALIC, 15));
+        textArea.setBounds(703, 155, 580, 565);
+        contentPane.add(textArea);
+        
+        JLabel lblNewLabel = new JLabel("CONSULT THE VET");
+        lblNewLabel.setBounds(310, 55, 351, 31);
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+        contentPane.add(lblNewLabel);
+        
+        JLabel lblNewLabel_3 = new JLabel("PET TYPE");
+        lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_3.setBounds(64, 224, 123, 31);
+        contentPane.add(lblNewLabel_3);
+        
+        JLabel lblNewLabel_4 = new JLabel("PET BREED");
+        lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_4.setBounds(64, 280, 123, 31);
+        contentPane.add(lblNewLabel_4);
+        
+        JLabel lblNewLabel_5 = new JLabel("AGE");
+        lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_5.setBounds(64, 342, 96, 26);
+        contentPane.add(lblNewLabel_5);
+        
+        JComboBox<String> comboBox = new JComboBox<>();
+        comboBox.setModel(new DefaultComboBoxModel<>(new String[] {"DOGS", "CATS", "BIRDS"}));
+        comboBox.setBounds(350, 232, 160, 22);
+        contentPane.add(comboBox);
+        
+        JComboBox<String> comboBox_1 = new JComboBox<>();
+        comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"American bulldog", "American foxhound", "Golden retriever", "Labrador retriever", "German shepherd", "Poodle", "Beagle", "Rottweller", "Dachshund", "Dobermann", "Shih tzu", "Great dane", "Pug", "Pomeranian", "Chihuahua", "Siberian husky", "Ragdoll", "Persian cat", "Maine coon", "Scottish fold", "Himalayan cat", "American curl", "Somali cat", "Bombay cat", "Burmese cat", "American short hair", "Red factory canary", "Araucana", "Racing homer", "Fantail pigeon", "American penkin", "Love birds", "Cockatiels", "Parrots", "Hyacinth macaws"}));
+        comboBox_1.setBounds(350, 280, 160, 30);
+        contentPane.add(comboBox_1);
+        
+        JComboBox<String> comboBox_2 = new JComboBox<>();
+        comboBox_2.setModel(new DefaultComboBoxModel<>(new String[] {"Puppyhood (upto 6 months)", "Adolescence(6 to 18 months)", "Adulthood(1.5 years to 3 years)", "Senior(more than 3 years)"}));
+        comboBox_2.setBounds(350, 344, 160, 26);
+        contentPane.add(comboBox_2);
+        
+        textField_2 = new JTextField();
+        textField_2.setBounds(350, 402, 300, 41);
+        contentPane.add(textField_2);
+        textField_2.setColumns(10);
+        
+        JButton btnNewButton = new JButton("BOOK YOUR APPOINTMENT");
+        btnNewButton.addActionListener(new ActionListener() {
+            private String date;
+
+			public void actionPerformed(ActionEvent e) {
+               /* String username = textField.getText();
+                String type = (String) comboBox.getSelectedItem();
+                String breed = (String) comboBox_1.getSelectedItem();
+                String age = (String) comboBox_2.getSelectedItem();
+                String concern = textField_2.getText();
+                String date = dateChooser.getDate().toString();
+                String time = (String) comboBox_3.getSelectedItem();
+                
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pet_adoption_portal", "root", "mnbvcxY@0");
+                    String query = "INSERT INTO vet VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    PreparedStatement pst = con.prepareStatement(query);
+                    pst.setString(1, username);
+                    pst.setString(2, type);
+                    pst.setString(3, breed);
+                    pst.setString(4, age);
+                    pst.setString(5, concern);
+                    pst.setString(6, date);
+                    pst.setString(7, time);
+                    
+                    int rowsAffected = pst.executeUpdate();
+                    if (rowsAffected > 0) {
+                        JOptionPane.showMessageDialog(null, "Successfully Inserted");
+                        setVisible(false);
+                        
+                    }
+                    
+                    
+                    pst.close();
+                    con.close();
+                } catch (SQLException | ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }*/
+                textArea.append("\n\n\n" +
+                    "Phone NO:7806854324\t\t\twww.happypaws.com\n" +
+                    "Fax:0427-23567\t\t\temail:happypaws23@gmail.com\n\n\n" +
+                    "\t\t                 HAPPY PAWS\n\n" +
+                    "\t\t\t\t     APPOINTMENT SLIP\n\n" +
+                    "\t\t=======================================================\n\n" +
+                    "\t\tusername:|\t\t" + textField.getText() + "\n" +
+                    "-------------------------------------------------------\n" +
+                    "\t\ttype:|\t\t" + (String) comboBox.getSelectedItem() + "\n" +
+                    "-------------------------------------------------------\n" +
+                    "\t\tbreed:|\t\t" + (String) comboBox_1.getSelectedItem() + "\n" +
+                    "-------------------------------------------------------\n" +
+                    "\t\tage:|\t\t" + (String) comboBox_2.getSelectedItem() + "\n" +
+                    "-------------------------------------------------------\n" +
+                    "\t\tconcern:|\t\t" + textField.getText() + "\n" +
+                    "-------------------------------------------------------\n" +
+                    "\t\tdate:|\t\t" + date + "\n" +
+                    "-------------------------------------------------------\n" +
+                    "\t\ttime:|\t\t" + (String) comboBox_3.getSelectedItem() + "\n" +
+                    "=========================================================\n" +
+                    "\t\tCONGRATULATIONS YOUR APPOINTMENT HAS BEEN PLACED SUCCESSFULLY!!\n");
+            }
+        });
+
+        btnNewButton.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+        btnNewButton.setBounds(308, 610, 353, 51);
+        contentPane.add(btnNewButton);
+        
+        comboBox_3 = new JComboBox<>();
+        comboBox_3.setModel(new DefaultComboBoxModel<>(new String[] {"8:00 am to 9:00 am", "10:00 am to 11:00 am", "1:00 pm to 2:00 pm", "5:00 pm to 6:00 pm", "8:00 pm to 9:00 pm"}));
+        comboBox_3.setBounds(350, 486, 160, 22);
+        contentPane.add(comboBox_3);
+        
+        JLabel lblNewLabel_1 = new JLabel("NAME");
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1.setBounds(64, 142, 123, 31);
+        contentPane.add(lblNewLabel_1);
+        
+        textField = new JTextField();
+        textField.setBounds(350, 142, 300, 41);
+        contentPane.add(textField);
+        textField.setColumns(10);
+        
+        JLabel lblNewLabel_2 = new JLabel("CONCERN");
+        lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_2.setBounds(64, 413, 123, 31);
+        contentPane.add(lblNewLabel_2);
+        
+        dateChooser = new JDateChooser();
+        dateChooser.setBounds(350, 554, 300, 31);
+        contentPane.add(dateChooser);
+        
+        JLabel lblNewLabel_7_1 = new JLabel("DATE");
+        lblNewLabel_7_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_7_1.setBounds(64, 568, 123, 31);
+        contentPane.add(lblNewLabel_7_1);
+        
+        JLabel lblNewLabel_7 = new JLabel("TIME SLOT");
+        lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_7.setBounds(64, 490, 123, 31);
+        contentPane.add(lblNewLabel_7);
+        
+        JButton btnNewButton_1 = new JButton("BACK");
+        btnNewButton_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		try {
+					new secondPage().setVisible(true);
+					SwingUtilities.windowForComponent(btnNewButton_1).dispose();
+				}
+				catch(Exception o) {
+					JOptionPane.showMessageDialog(btnNewButton_1,this,"Error while establishing connection failed",0);
+				}
+        	}
+        });
+        btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
+        btnNewButton_1.setBounds(1114, 33, 169, 41);
+        contentPane.add(btnNewButton_1);
+        
+        JLabel lblNewLabel_6 = new JLabel("");
+        lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\Owner\\Downloads\\annie-spratt-zA7I5BtFbvw-unsplash.jpg"));
+        lblNewLabel_6.setBounds(0, 0, 1750, 870);
+        contentPane.add(lblNewLabel_6);
+    }
+}
+
