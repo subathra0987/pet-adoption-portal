@@ -1,0 +1,230 @@
+package PET_ADOPTION;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
+import javax.swing.ImageIcon;
+
+public class newuser extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JPasswordField passwordField;
+	private JTextField textField;
+	private JPasswordField passwordField_1;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					newuser frame = new newuser();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public newuser() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(0, 0, 1750, 870);
+		contentPane = new JPanel();
+		contentPane.setBackground(Color.PINK);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("show password");
+		rdbtnNewRadioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 if (rdbtnNewRadioButton.isSelected()) {
+	                    passwordField.setEchoChar((char) 0);
+	                } else {
+	                    passwordField.setEchoChar('*');
+	                }
+				
+			}
+		});
+		rdbtnNewRadioButton.setBounds(884, 360, 160, 25);
+		contentPane.add(rdbtnNewRadioButton);
+		
+		JLabel eror_1 = new JLabel("");
+		eror_1.setBounds(76, 152, 329, 21);
+		contentPane.add(eror_1);
+		
+		JButton btnNewButton_1 = new JButton("BACK");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					new loginPage().setVisible(true);
+					SwingUtilities.windowForComponent(btnNewButton_1).dispose();
+				}
+				catch(Exception o) {
+					JOptionPane.showMessageDialog(btnNewButton_1,this,"Error while establishing connection failed",0);
+				}
+			}
+		});
+		btnNewButton_1.setBounds(1150, 49, 89, 23);
+		btnNewButton_1.setBackground(new Color(255, 250, 205));
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		contentPane.add(btnNewButton_1);
+		
+		JLabel newpass = new JLabel("set password");
+		newpass.setBounds(418, 303, 214, 68);
+		newpass.setFont(new Font("Tahoma", Font.BOLD, 25));
+		contentPane.add(newpass);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(677, 297, 263, 56);
+		contentPane.add(passwordField);
+		
+		textField = new JTextField();
+		textField.setBounds(677, 204, 263, 52);
+		textField.setColumns(10);
+		contentPane.add(textField);
+		
+		JLabel newuser = new JLabel("username");
+		newuser.setBounds(415, 204, 170, 56);
+		newuser.setFont(new Font("Tahoma", Font.BOLD, 25));
+		contentPane.add(newuser);
+		
+		JLabel lblNewLabel = new JLabel("confirm password");
+		lblNewLabel.setBounds(369, 414, 263, 43);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		contentPane.add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("signup");
+		btnNewButton.addActionListener(new ActionListener() {
+			private String errorMessage;
+
+			public void actionPerformed(ActionEvent e) {
+				String username=textField.getText();
+				String ps=passwordField.getText();
+				String ps1=passwordField_1.getText();
+				if ((!ps.equals(ps1) || !isValidPassword(ps))) {
+		            String errorMessage = "";
+		            if (!ps.equals(ps1)) {
+		                errorMessage += "Invalid Password. Password does not match.\n";
+		            }
+		            JOptionPane.showMessageDialog(null, errorMessage, "Invalid Input", JOptionPane.ERROR_MESSAGE);
+		            return; // Stop further execution
+		        }
+
+		            
+
+		            if (!isValidPassword(ps)) {
+		                errorMessage += "Invalid Password. Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.\n";
+		            }
+
+			
+				try {
+				    try {
+						Class.forName("com.mysql.cj.jdbc.Driver");
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				Connection con = (Connection)DriverManager.getConnection("jdbc:mysql://localhost:3306/pet_adoption_portal","root","mnbvcxY@0");
+				    String query = "INSERT INTO access VALUES (?, ?)";
+				    PreparedStatement pst = con.prepareStatement(query);
+				    pst.setString(1, username);
+				    pst.setString(2,ps);
+				    
+				    int rowsAffected = pst.executeUpdate();
+				    if (rowsAffected > 0) {
+				        JOptionPane.showMessageDialog(null, "Successfully Inserted");
+				        setVisible(false);
+				        new loginPage().setVisible(true);
+				    }
+				   
+				    pst.close();
+				    con.close();
+				} catch (SQLException e1) {
+				    e1.printStackTrace();
+				    // Handle any SQL errors
+				}
+
+
+			}
+		});
+		btnNewButton.setBounds(638, 556, 150, 35);
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 25));
+		contentPane.add(btnNewButton);
+		
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setBounds(677, 431, 263, 56);
+		contentPane.add(passwordField_1);
+		
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("show password");
+		rdbtnNewRadioButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 if (rdbtnNewRadioButton.isSelected()) {
+	                    passwordField_1.setEchoChar((char) 0);
+	                } else {
+	                    passwordField_1.setEchoChar('*');
+	                }
+			}
+		});
+		rdbtnNewRadioButton_1.setBounds(884, 495, 160, 25);
+		contentPane.add(rdbtnNewRadioButton_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Owner\\Downloads\\iris-laura-5UCZREYSXDs-unsplash.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 1750, 870);
+		contentPane.add(lblNewLabel_1);
+	}
+
+	protected boolean isValidPassword(String pass) {
+		if (pass.length() < 8) {
+		    return false; // Password length less than 8 characters
+		}
+		
+		// Check for at least one uppercase letter, one lowercase letter, one special character, and one number
+		boolean hasUppercase = false;
+		boolean hasLowercase = false;
+		boolean hasSpecialChar = false;
+		boolean hasNumber = false;
+		
+		for (char c : pass.toCharArray()) {
+		    if (Character.isUpperCase(c)) {
+		        hasUppercase = true;
+		    } else if (Character.isLowerCase(c)) {
+		        hasLowercase = true;
+		    } else if (Character.isDigit(c)) {
+		        hasNumber = true;
+		    } else if (!Character.isLetterOrDigit(c)) {
+		        hasSpecialChar = true;
+		    }
+		}
+		
+		return hasUppercase && hasLowercase && hasSpecialChar && hasNumber;
+	}
+}
