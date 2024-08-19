@@ -1,0 +1,304 @@
+package PET_ADOPTION;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+public class abc extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private JTextField textField;
+    private JTextField pn;
+    private JTextField textField_2;
+    private JTextField textField_3;
+    private JTextField textField_4;
+    private JTextField textField_5;
+    private JTable table;
+    private JTextField textField_6;
+    private JTextArea textArea;
+    private String username;
+	private AbstractButton lblNewLabel_2;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    abc frame = new abc();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public abc() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 1750, 870);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(null);
+        setContentPane(contentPane);
+
+        JLabel lblNewLabel_2 = new JLabel("");
+        lblNewLabel_2.setBounds(370, 24, 350, 350);
+        contentPane.add(lblNewLabel_2);
+
+        JLabel lblNewLabel_1_3 = new JLabel("PET TYPE");
+        lblNewLabel_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1_3.setBounds(744, 56, 100, 25);
+        contentPane.add(lblNewLabel_1_3);
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(48, 408, 533, 278);
+        contentPane.add(scrollPane);
+
+        table = new JTable();
+        scrollPane.setViewportView(table);
+        table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Type", "Breed", "Age", "Gender", "Username", "Pet Code" }));
+
+        JButton btnNewButton_1 = new JButton("Show Availables");
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pet_adoption_portal", "root", "mnbvcxY@0");
+                    String sql = "select * from pet_det";
+                    PreparedStatement pts = con.prepareStatement(sql);
+                    ResultSet rs = pts.executeQuery();
+                    DefaultTableModel dt = (DefaultTableModel) table.getModel();
+                    dt.setRowCount(0);
+                    while (rs.next()) {
+                        Object o[] = { rs.getString("type"), rs.getString("breed"), rs.getString("age"), rs.getString("gender"), rs.getString("username"),
+                                rs.getString("petcode") };
+                        dt.addRow(o);
+                    }
+                } catch (Exception ec) {
+                    JOptionPane.showMessageDialog(null, "It has not been registered");
+                    ec.printStackTrace();
+                }
+            }
+        });
+        btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnNewButton_1.setBounds(23, 344, 200, 30);
+        contentPane.add(btnNewButton_1);
+
+        JLabel lblNewLabel = new JLabel("ADOPTER DETAILS");
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblNewLabel.setBounds(115, 30, 200, 30);
+        contentPane.add(lblNewLabel);
+
+        JLabel lblNewLabel_1 = new JLabel("NAME");
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1.setBounds(30, 88, 160, 25);
+        contentPane.add(lblNewLabel_1);
+
+        textField = new JTextField();
+        textField.setColumns(10);
+        textField.setBounds(200, 88, 160, 25);
+        contentPane.add(textField);
+
+        JLabel lblNewLabel_1_1 = new JLabel("PHONE NO.");
+        lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1_1.setBounds(30, 148, 160, 25);
+        contentPane.add(lblNewLabel_1_1);
+
+        pn = new JTextField();
+        pn.setColumns(10);
+        pn.setBounds(200, 148, 160, 25);
+        contentPane.add(pn);
+
+        JButton btnNewButton_2 = new JButton("BACK");
+        btnNewButton_2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new secondPage().setVisible(true);
+                    SwingUtilities.windowForComponent(btnNewButton_2).dispose();
+                } catch (Exception o) {
+                    JOptionPane.showMessageDialog(btnNewButton_2, "Error while establishing connection", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        btnNewButton_2.setBounds(1131, 38, 120, 30);
+        contentPane.add(btnNewButton_2);
+
+        textField_2 = new JTextField();
+        textField_2.setColumns(10);
+        textField_2.setBounds(854, 62, 250, 30);
+        contentPane.add(textField_2);
+
+        JLabel lblNewLabel_1_3_2 = new JLabel("PET GENDER");
+        lblNewLabel_1_3_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1_3_2.setBounds(724, 127, 120, 25);
+        contentPane.add(lblNewLabel_1_3_2);
+
+        textField_3 = new JTextField();
+        textField_3.setColumns(10);
+        textField_3.setBounds(854, 133, 250, 25);
+        contentPane.add(textField_3);
+
+        JLabel lblNewLabel_1_3_1 = new JLabel("PET BREED");
+        lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1_3_1.setBounds(734, 187, 110, 25);
+        contentPane.add(lblNewLabel_1_3_1);
+
+        textField_4 = new JTextField();
+        textField_4.setColumns(10);
+        textField_4.setBounds(854, 193, 250, 25);
+        contentPane.add(textField_4);
+
+        JLabel lblNewLabel_1_3_2_1 = new JLabel("PET AGE");
+        lblNewLabel_1_3_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1_3_2_1.setBounds(744, 247, 100, 25);
+        contentPane.add(lblNewLabel_1_3_2_1);
+
+        textField_5 = new JTextField();
+        textField_5.setColumns(10);
+        textField_5.setBounds(854, 247, 250, 25);
+        contentPane.add(textField_5);
+
+        textArea = new JTextArea();
+        textArea.setBounds(783, 330, 500, 450);
+        contentPane.add(textArea);
+
+        JButton btnNewButton_3_1_1 = new JButton("ADD");
+        btnNewButton_3_1_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textArea.append("\n\n\n" + "Phone NO:7806854324\t\t\twww.happypaws.com\n" + "Fax:0427-23567\t\t\temail:happypaws23@gmail.com\n\n\n"
+                        + "\t\t                 HAPPY PAWS\n\n" + "\t\t\t\t     ADOPTION DETAILS\n\n" +
+                        "\t\t=======================================================\n\n"
+                        + "\t\ttype:|\t\t" + textField_2.getText() + 
+                        "\n" + "-------------------------------------------------------\n" + 
+                        "\t\tgender:|\t\t"+ textField_3.getText() +
+                        "\n" + "-------------------------------------------------------\n" +
+                        "\t\tbreed:|\t\t" + textField_4.getText() + "\n"
+                        + "-------------------------------------------------------\n" +
+                        "\t\tage:|\t\t" + textField_5.getText() + "\n" + 
+                        "=========================================================\n"
+                        + "\t\tTHANK YOU FOR ADOPTING YOUR FOREVER FRIEND!!\n");
+            }
+        });
+        btnNewButton_3_1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        btnNewButton_3_1_1.setBounds(1101, 283, 150, 23);
+        contentPane.add(btnNewButton_3_1_1);
+
+        JButton btnNewButton_3 = new JButton("PRINT");
+        btnNewButton_3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    textArea.print();
+                } catch (PrinterException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+        });
+        btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        btnNewButton_3.setBounds(882, 283, 150, 23);
+        contentPane.add(btnNewButton_3);
+
+        JLabel lblNewLabel_1_2_1_1 = new JLabel("PET CODE");
+        lblNewLabel_1_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblNewLabel_1_2_1_1.setBounds(23, 247, 130, 25);
+        contentPane.add(lblNewLabel_1_2_1_1);
+
+        textField_6 = new JTextField();
+        textField_6.setColumns(10);
+        textField_6.setBounds(135, 237, 100, 35);
+        contentPane.add(textField_6);
+
+        JButton btnNewButton = new JButton("SEARCH");
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pet_adoption_portal", "root", "mnbvcxY@0");
+                    String petcode = textField_6.getText();
+                    String sql = "SELECT * FROM pet_det WHERE petcode=?";
+                    PreparedStatement pst = con.prepareStatement(sql);
+                    pst.setString(1, petcode);
+                    ResultSet rs = pst.executeQuery();
+
+                    if (rs.next()) {
+                        String fs1 = rs.getString("type");
+                        String fs2 = rs.getString("breed");
+                        String fs = rs.getString("age");
+                        String v = rs.getString("gender");
+                        textField_2.setText(fs1);
+                        textField_3.setText(fs2);
+                        textField_4.setText(fs);
+                        textField_5.setText(v);
+                        String imageName = rs.getString("petcode").replace(" ", "") + ".jpg";
+                        ImageIcon icon = new ImageIcon("image/" + imageName);
+                        Image image = icon.getImage().getScaledInstance(lblNewLabel_2.getWidth(), lblNewLabel_2.getHeight(), Image.SCALE_SMOOTH);
+                        lblNewLabel_2.setIcon(new ImageIcon(image));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Pet unavailable.");
+                        clearLabels();
+                    }
+                    con.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error occurred while searching.");
+                    clearLabels();
+                }
+            }
+        });
+        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        btnNewButton.setBounds(87, 285, 100, 30);
+        contentPane.add(btnNewButton);
+
+        JButton btnSubmit = new JButton("SUBMIT");
+        btnSubmit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (pn.getText().length() != 10) {
+                    JOptionPane.showMessageDialog(null, "Phone number must be exactly 10 digits.");
+                } else {
+                    //username = loginPage.us;
+                    textField.setVisible(true);
+                   // textField.setText(username);
+                }
+            }
+        });
+        btnSubmit.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        btnSubmit.setBounds(115, 192, 100, 30);
+        contentPane.add(btnSubmit);
+
+        JLabel lblNewLabel_3 = new JLabel("");
+        lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\Owner\\Downloads\\annie-spratt-zA7I5BtFbvw-unsplash.jpg"));
+        lblNewLabel_3.setBounds(0, 0, 1750, 870);
+        contentPane.add(lblNewLabel_3);
+    }
+
+    private void clearLabels() {
+        textField_2.setText("");
+        textField_3.setText("");
+        textField_4.setText("");
+        textField_5.setText("");
+        lblNewLabel_2.setIcon(null);
+    }
+}
+
