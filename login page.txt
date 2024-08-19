@@ -1,0 +1,244 @@
+package PET_ADOPTION;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Random;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class loginPage extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+	static String us;
+    private JPanel contentPane;
+    private JTextField textField;
+    private JPasswordField passwordField;
+    private JTextField captchaField;
+    private JLabel captchaLabel;
+    private String captchaText;
+   
+   
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    loginPage frame = new loginPage();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Create the frame.
+     */
+    public loginPage() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(0, 0, 1750, 870);
+        contentPane = new JPanel();
+       // contentPane.setBackground(Color.PINK);
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JRadioButton rdbtnNewRadioButton = new JRadioButton("Show Password");
+        rdbtnNewRadioButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (rdbtnNewRadioButton.isSelected()) {
+                    passwordField.setEchoChar((char) 0);
+                } else {
+                    passwordField.setEchoChar('*');
+                }
+            }
+        });
+        
+        JLabel lblNewLabel = new JLabel("Username");
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblNewLabel.setBounds(201, 170, 160, 34);
+        contentPane.add(lblNewLabel);
+        
+        JLabel lblNewLabel_1 = new JLabel("Password");
+        lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblNewLabel_1.setBounds(234, 246, 127, 23);
+        contentPane.add(lblNewLabel_1);
+        
+        JLabel lblCaptcha = new JLabel("Enter CAPTCHA:");
+        lblCaptcha.setFont(new Font("Tahoma", Font.BOLD, 25));
+        lblCaptcha.setBounds(161, 310, 250, 30);
+        contentPane.add(lblCaptcha);
+        rdbtnNewRadioButton.setBounds(635, 236, 111, 34);
+        contentPane.add(rdbtnNewRadioButton);
+
+        passwordField = new JPasswordField();
+        passwordField.setBounds(457, 236, 159, 34);
+        contentPane.add(passwordField);
+
+        textField = new JTextField();
+        textField.setColumns(10);
+        textField.setBounds(457, 170, 159, 34);
+        contentPane.add(textField);
+
+        JLabel lblNewLabel_4 = new JLabel("SIGN IN to adopt a new friend");
+        lblNewLabel_4.setFont(new Font("Rockwell Extra Bold", Font.BOLD | Font.ITALIC, 30));
+        lblNewLabel_4.setBounds(141, 28, 866, 62);
+        contentPane.add(lblNewLabel_4);
+
+        captchaField = new JTextField();
+        captchaField.setColumns(10);
+        captchaField.setBounds(457, 300, 159, 34);
+        contentPane.add(captchaField);
+
+        captchaLabel = new JLabel("");
+        captchaLabel.setBounds(457, 350, 188, 50);
+        contentPane.add(captchaLabel);
+
+        // Generate and display CAPTCHA
+        generateCaptcha();
+
+        JButton btnNewButton = new JButton("LOGIN");
+        btnNewButton.setBounds(484, 433, 111, 45);
+        btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String us = textField.getText();
+                    String ps = new String(passwordField.getPassword());
+                    String captchaInput = captchaField.getText();
+
+                    if (!captchaInput.equals(captchaText)) {
+                        JOptionPane.showMessageDialog(btnNewButton, "Invalid CAPTCHA. Please try again.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        generateCaptcha(); // Regenerate CAPTCHA
+                        return;
+                    }
+
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pet_adoption_portal","root", "mnbvcxY@0");
+                    Statement st = con.createStatement();
+                    String sql = "SELECT * FROM access";
+                    ResultSet rs = st.executeQuery(sql);
+
+                    boolean loginSuccess = false;
+                    while (rs.next()) {
+                        String username = rs.getString("username");
+                        String password = rs.getString("password");
+
+                        if (us.equals(username) && ps.equals(password)) {
+                            new secondPage().setVisible(true);
+                            SwingUtilities.windowForComponent(btnNewButton).dispose();
+                            loginSuccess = true;
+                            break;
+                        }
+                    }
+
+                    if (!loginSuccess) {
+                        JOptionPane.showMessageDialog(btnNewButton, "Invalid username or password.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        textField.setText("");
+                        passwordField.setText("");
+                        captchaField.setText("");
+                        generateCaptcha(); // Regenerate CAPTCHA
+                    }
+                } catch (Exception o) {
+                    JOptionPane.showMessageDialog(btnNewButton, "Error while establishing connection", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    o.printStackTrace();
+                }
+            }
+        });
+        contentPane.add(btnNewButton);
+
+        JButton btnNewButton_1 = new JButton("SIGNUP");
+        btnNewButton_1.setBounds(660, 460, 149, 45);
+        btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new newuser().setVisible(true);
+                    SwingUtilities.windowForComponent(btnNewButton_1).dispose();
+                } catch (Exception o) {
+                    JOptionPane.showMessageDialog(btnNewButton_1, "Error while establishing connection", "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    o.printStackTrace();
+                }
+            }
+        });
+        contentPane.add(btnNewButton_1);
+
+        JButton btnNewButton_2 = new JButton("RESET PASSWORD");
+        btnNewButton_2.setBounds(164, 460, 215, 54);
+        btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnNewButton_2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                forgetpassword fp = new forgetpassword();
+                fp.setVisible(true);
+                SwingUtilities.windowForComponent(btnNewButton_2).dispose();
+            }
+        });
+        contentPane.add(btnNewButton_2);
+
+        JButton btnRefreshCaptcha = new JButton("Refresh CAPTCHA");
+        btnRefreshCaptcha.setBounds(635, 300, 200, 34);
+        btnRefreshCaptcha.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        btnRefreshCaptcha.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                generateCaptcha();
+            }
+        });
+        contentPane.add(btnRefreshCaptcha);
+
+        JLabel label = new JLabel("");
+        label.setBackground(new Color(255, 204, 204));
+        label.setIcon(new ImageIcon("C:\\Users\\Owner\\Downloads\\victor-grabarczyk-N04FIfHhv_k-unsplash.jpg"));
+        label.setBounds(-12, 0, 1750, 870);
+        contentPane.add(label);
+    }
+
+    private void generateCaptcha() {
+        captchaText = generateRandomText();
+        BufferedImage captchaImage = createCaptchaImage(captchaText);
+        ImageIcon captchaIcon = new ImageIcon(captchaImage);
+        captchaLabel.setIcon(captchaIcon);
+    }
+
+    private String generateRandomText() {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder captcha = new StringBuilder(6);
+        Random rand = new Random();
+        for (int i = 0; i < 6; i++) {
+            captcha.append(chars.charAt(rand.nextInt(chars.length())));
+        }
+        return captcha.toString();
+    }
+
+    private BufferedImage createCaptchaImage(String text) {
+        int width = 160;
+        int height = 50;
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = bufferedImage.getGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, width, height);
+        g.setFont(new Font("Arial", Font.BOLD, 40));
+        g.setColor(Color.BLACK);
+        g.drawString(text, 10, 40);
+        g.dispose();
+        return bufferedImage;
+    }
+}
+
